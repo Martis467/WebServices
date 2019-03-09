@@ -1,3 +1,7 @@
+###To run the app run the following command
+dcoker-compose up --build -d 
+
+
 #Web service API documentation
 
 ## Usage
