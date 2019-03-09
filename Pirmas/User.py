@@ -33,7 +33,7 @@ class UserList(Resource):
         return {'message': 'User created', 'data': args}, 201
 
 
-class User(Resource):
+class Users(Resource):
     def get(self, email):
         shelf = get_db()
 
@@ -71,6 +71,28 @@ class User(Resource):
         del shelf[email]
 
         return '', 204
+
+
+def fill_start():
+    shelf = get_db()
+    test_user1 = \
+        {
+            'firstName': 'Seras',
+            'lastName': 'Meras',
+            'email': 'eskaferas@gmail.com'
+        }
+    test_user2 = \
+        {
+            'firstName': 'Oras',
+            'lastName': 'Moras',
+            'email': 'Soras@gmail.com'
+        }
+
+    if test_user1['email'] in shelf:
+        return
+
+    shelf[test_user1['email']] = test_user1
+    shelf[test_user2['email']] = test_user2
 
 
 def get_db():
