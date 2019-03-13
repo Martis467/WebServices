@@ -29,7 +29,7 @@ class UserList(Resource):
         args = parser.parse_args()
 
         if args['email'] in shelf:
-            return {'message': 'Email Already Exists', 'data': {}}, 3000
+            return {'message': 'Email Already Exists', 'data': {}}, 409
         
         shelf[args['email']] = args
 
@@ -60,17 +60,19 @@ class Users(Resource):
         # Parser arguments into obj
         args = parser.parse_args()
 
-        shelf = get_db()
-        shelf[email] = args
+        if (args['email'] in shelf) and (args['email'] != email):
+            return {'message': 'Email Already Exists', 'data': {}}, 409
+
+        del shelf[email]
+        shelf[args['email']] = args
 
         return {'message': 'User updated successfully', 'data': args}, 202
-    
-    
+
     def patch(self, email):
         parser = reqparse.RequestParser()
         shelf = get_db()
 
-        if not email in shelf:
+        if not (email in shelf):
             return {'message': 'User not found', 'data': {}}, 404
 
         parser.add_argument('firstName', required=False)
@@ -81,17 +83,25 @@ class Users(Resource):
 
         user = shelf[email]
 
-        if not args['firstName'] is None:
+        if not (args['firstName'] is None):
             user['firstName'] = args['firstName']
 
-        if not args['lastName'] is None:
+        if not (args['lastName'] is None):
             user['lastName'] = args['lastName']
 
-        if not args['email'] is None:
+        if not (args['email'] is None):
             user['email'] = args['email']
+            if args['email'] in shelf:
+                return {'message': 'Email Already Exists', 'data': {}}, 409
 
         del shelf[email]
-        shelf[args['email']] = args
+
+        if not (args['email'] is None):
+            shelf[args['email']] = user
+        else:
+            shelf[email] = user
+
+        return {'message': 'User updated successfully', 'data': user}, 202
 
     def delete(self, email):
         shelf = get_db()

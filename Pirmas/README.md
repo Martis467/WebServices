@@ -1,5 +1,5 @@
 ###To run the app run the following command
-dcoker-compose up --build -d 
+docker-compose up --build -d 
 
 
 #Web service API documentation
@@ -91,11 +91,28 @@ Further end-point documentation will only detail the data field
 
 **Definition**
 
-`PUT /user`
+`PUT /user/{email}`
 
 **Arguments**
 
-- `"id": integer`
+- `"firstName": string`
+- `"lastName": string`
+- `"email": string`
+
+**Response**
+
+- `202 Accepted` on success
+- `404 Not Found` if user doesnt exist
+- `3000 Email Already Exists` if email is already taken 
+
+### Patch a user
+
+**Definition**
+
+`PATCH /user/{email}`
+
+**Arguments**
+
 - `"firstName": string`
 - `"lastName": string`
 - `"email": string`
