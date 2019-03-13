@@ -19,7 +19,8 @@ class UserList(Resource):
 
     def post(self):
         parser = reqparse.RequestParser()
-
+        shelf = get_db()
+        
         parser.add_argument('firstName', required=True)
         parser.add_argument('lastName', required=True)
         parser.add_argument('email', required=True)
@@ -27,7 +28,9 @@ class UserList(Resource):
         # Parser arguments into obj
         args = parser.parse_args()
 
-        shelf = get_db()
+        if args['email'] in shelf:
+            return {'message': 'Email Already Exists', 'data': {}}, 3000
+        
         shelf[args['email']] = args
 
         return {'message': 'User created', 'data': args}, 201
