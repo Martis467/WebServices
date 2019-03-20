@@ -33,7 +33,7 @@ class UserList(Resource):
         
         shelf[args['email']] = args
 
-        return {'message': 'User created', 'data': args}, 201
+        return {'message': 'User created', 'data': args}, 201, {'Location': '/users/' + args['email']}
 
 
 class Users(Resource):
@@ -101,7 +101,7 @@ class Users(Resource):
         else:
             shelf[email] = user
 
-        return {'message': 'User updated successfully', 'data': user}, 202
+        return {'message': 'User updated successfully', 'data': user}, 202, {'Location': '/users/' + args['email']}
 
     def delete(self, email):
         shelf = get_db()
