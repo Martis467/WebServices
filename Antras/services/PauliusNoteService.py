@@ -7,7 +7,7 @@ class PauliusNoteService:
     Status = Enum('Status','Success NoteExists NoteDoesNotExist')
 
     def __init__(self):
-        self.url = "http://193.219.91.103:15983/"
+        self.url = "http://0.0.0.0:5001/"
 
     def get_all_notes(self):
         r = requests.get(self.url + 'notes')
