@@ -1,7 +1,18 @@
-web:
-  build: .
-  command: python app.py
-  ports:
-    - "80:5000"
-  volumes:
-    - .:/code
+version: '3'
+
+services:
+  webApi:
+    build: .
+    command: python app.py
+    ports:
+      - "80:5000"
+    volumes:
+      - .:/code
+
+  pauliusApi:
+    build: ./PauliausService/
+    command: python app.py
+    ports:
+      - "5001:5001"
+    depends_on:
+      - webApi
