@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  webApi:
+  web:
     build: .
     command: python app.py
     ports:
@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/code
 
-  pauliusApi:
+  paulius:
     build: ./PauliausService/
     command: python app.py
     ports:
