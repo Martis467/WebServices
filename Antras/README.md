@@ -126,11 +126,10 @@ Further end-point documentation will only detail the data field
 
 **Definition**
 
-`POST /users/notes`
+`POST /users/1/notes`
 
 **Arguments**
 
-- `"userId": 1`
 - `"title": string`
 - `"comment": string`
 
@@ -140,7 +139,6 @@ Further end-point documentation will only detail the data field
 
 ```json
 {
-    "id": 1,
     "title": "Darbai",
     "comment": "Isplaut grindis, pasert suni"
 }

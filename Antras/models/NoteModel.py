@@ -9,5 +9,4 @@ class Note:
         return {
             'title': self.title,
             'comment': self.comment,
-            'expiration': self.expiration
         }

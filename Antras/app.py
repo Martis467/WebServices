@@ -4,7 +4,7 @@ import markdown
 from controllers.UsersController import UsersController
 from controllers.UserController import UserController
 from controllers.UsersNotesController import UsersNotesController
-from controllers.UserNotesController import UserNoteController
+from controllers.UserNotesController import UserNotesController, UserNoteController
 
 app = Flask(__name__)
 api = Api(app)
@@ -23,7 +23,8 @@ def index():
 api.add_resource(UsersController, '/users')
 api.add_resource(UserController, '/users/<int:id>')
 api.add_resource(UsersNotesController, '/users/notes')
-api.add_resource(UserNoteController, '/users/<int:user_id>/notes')
+api.add_resource(UserNotesController, '/users/<int:user_id>/notes')
+api.add_resource(UserNoteController, '/users/<int:user_id>/notes/<string:title>')
 
 
 if __name__ == '__main__':
