@@ -15,4 +15,4 @@ services:
     ports:
       - "5001:5001"
     depends_on:
-      - webApi
+      - web
