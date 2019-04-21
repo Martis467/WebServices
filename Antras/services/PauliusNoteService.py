@@ -28,6 +28,11 @@ class PauliusNoteService:
         else:
             return False
 
+    def update_note(self, title, note):
+        r = requests.put(self.url + f'notes/{title}', data=note)
+
+        return r.status_code
+
     def delete_note(self, title):
         r = requests.delete(self.url + f'notes/{title}')
 
@@ -35,4 +40,5 @@ class PauliusNoteService:
             return True
         else:
             return False
+
 

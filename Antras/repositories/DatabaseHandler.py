@@ -122,6 +122,37 @@ def update_user(user, id):
         return None
 
 
+def update_user_note(old_title, new_title):
+    """
+    Updates user note
+    :param old_title:
+    :param new_title:
+    :return:
+    """
+    conn = create_connection(database)
+    cur = conn.cursor()
+
+    try:
+        # Getting user
+        sql = ''' SELECT * FROM UserNotes WHERE Note=?'''
+
+        cur.execute(sql, (old_title,))
+        user_to_update = cur.fetchone()
+
+        user_note = (new_title, user_to_update[0])
+
+        sql = '''   UPDATE UserNotes 
+                    SET Note=?
+                    WHERE Id=?'''
+
+        cur.execute(sql, user_note)
+        conn.commit()
+        return cur.lastrowid
+    except Error as e:
+        print(e)
+        return None
+
+
 def delete_user(id):
     """
     Delete

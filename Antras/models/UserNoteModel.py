@@ -7,7 +7,7 @@ class UserNotes:
 
     def serialize(self):
         user_with_notes = {'user': self.user.serialize()}
-        user_with_notes.update({'notes': f'{self.serialize_notes()}'})
+        user_with_notes.update({'notes': self.serialize_notes()})
         return user_with_notes
 
     def serialize_notes(self):
