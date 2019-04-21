@@ -1,13 +1,11 @@
 import requests
 from models.NoteModel import Note
-from enum import Enum
 
 
 class PauliusNoteService:
-    Status = Enum('Status','Success NoteExists NoteDoesNotExist')
 
     def __init__(self):
-        self.url = "http://0.0.0.0:5001/"
+        self.url = "http://paulius_service:5001/"
 
     def get_all_notes(self):
         r = requests.get(self.url + 'notes')

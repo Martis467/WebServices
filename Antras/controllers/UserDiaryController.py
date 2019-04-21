@@ -39,7 +39,7 @@ class UserNotesController(Resource):
         # Parser arguments into obj
         args = parser.parse_args()
 
-        note = {'title': args['title'],
+        note = {'title': args['title'] + "*" + str(user_id),
                 'author': f'{user.first_name} {user.last_name}',
                 'comment': args['comment'],
                 'expiration': '2020-12-02'}
@@ -67,7 +67,7 @@ class UserNoteController(Resource):
         if not self.id_valid(user_id):
             return {'message': 'User not found', 'data': {}}, 404
 
-        deleted = PauliusNoteService().delete_note(title)
+        deleted = PauliusNoteService().delete_note(title + "*" + str(user_id))
 
         if deleted:
             delete_user_note((user_id, title))

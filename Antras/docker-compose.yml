@@ -8,11 +8,9 @@ services:
       - "80:5000"
     volumes:
       - .:/code
+    container_name: main_service
 
-  paulius:
-    build: ./PauliausService/
-    command: python app.py
-    ports:
-      - "5001:80"
-    depends_on:
-      - web
+networks:
+ default:
+  external:
+   name: ws_bridge

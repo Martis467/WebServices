@@ -1,0 +1,16 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: ws_bridge
+
+services:
+  web:
+    build: .
+    command: python app.py
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/code
+    container_name: paulius_service

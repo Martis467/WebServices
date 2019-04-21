@@ -1,8 +1,9 @@
-###To run the app run the following command
-docker-compose up --build -d 
+###To run/close the app run the following command
+./run.sh - to run the application
+./close.sh - stop the application
 
 
-#Web service API documentation
+# Web service API documentation
 
 ## Usage
 
@@ -198,7 +199,7 @@ Further end-point documentation will only detail the data field
 
 **Definition**
 
-`PUT /users/notes/{title}`
+`PUT /users/{id}/notes/{title}`
 
 **Arguments**
 
@@ -209,24 +210,6 @@ Further end-point documentation will only detail the data field
 
 - `202 Accepted` on success
 - `404 Not Found` if note doesnt exist
-
-### Patch a user
-
-**Definition**
-
-`PATCH /user/{id}`
-
-**Arguments**
-
-- `"firstName": string`
-- `"lastName": string`
-- `"email": string`
-
-**Response**
-
-- `202 Accepted` on success
-- `404 Not Found` if user doesnt exist
-- `3000 Email Already Exists` if email is already taken 
 
 ### Delete a user
 
