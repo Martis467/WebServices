@@ -17,7 +17,7 @@ services:
 
   paulius_service:
     build: .
-    command: python PauliausService/app.py
+    command: python ./PauliausService/app.py
     ports:
       - 5001:5001
     networks:
