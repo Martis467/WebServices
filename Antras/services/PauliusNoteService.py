@@ -8,37 +8,71 @@ class PauliusNoteService:
         self.url = "http://paulius_service:5001/"
 
     def get_all_notes(self):
-        r = requests.get(self.url + 'notes')
-        json_array = r.json()
-
-        body = json_array['data']
-
         notes = []
+        try:
+            r = requests.get(self.url + 'notes')
+            requests.RequestException()
+            json_array = r.json()
 
-        for obj in body:
-            notes.append(Note(obj))
+            body = json_array['data']
+
+            for obj in body:
+                notes.append(Note(obj))
+
+        except requests.exceptions.RequestException as e:
+            print("paulius_service is down")
 
         return notes
 
-    def add_new_note(self, note):
-        r = requests.post(self.url + 'notes', data=note)
+    def get_single_note(self, title):
+        try:
+            r = requests.get(self.url + 'notes/' + title)
+            json_array = r.json()
 
-        if r.status_code == 201:
-            return True
-        else:
-            return False
+            body = json_array['data']
+
+            if r.status_code == 200:
+                return Note(body)
+
+        except requests.exceptions.RequestException as e:
+            print("paulius_service is down")
+
+        return None
+
+    def add_new_note(self, note):
+        try:
+            r = requests.post(self.url + 'notes', data=note)
+
+            if r.status_code == 201:
+                return True
+            else:
+                return False
+        except requests.exceptions.RequestException as e:
+            print("paulius_service is down")
+
+        return None
 
     def update_note(self, title, note):
-        r = requests.put(self.url + f'notes/{title}', data=note)
+        try:
+            r = requests.put(self.url + f'notes/{title}', data=note)
 
-        return r.status_code
+            return r.status_code
+        except requests.exceptions.RequestException as e:
+            print("paulius_service is down")
+
+        return None
 
     def delete_note(self, title):
-        r = requests.delete(self.url + f'notes/{title}')
+        try:
+            r = requests.delete(self.url + f'notes/{title}')
 
-        if r.status_code == 200:
-            return True
-        else:
-            return False
+            if r.status_code == 200:
+                return True
+            else:
+                return False
+        except requests.exceptions.RequestException as e:
+            print("paulius_service is down")
+
+        return None
 
 

@@ -47,6 +47,9 @@ class UserNotesController(Resource):
 
         added = PauliusNoteService().add_new_note(note)
 
+        if added is None:
+            return {'message': 'Unknown error occurred try again later', 'data': args}, 500
+
         if added:
             add_user_note((user_id, args['title'] + "*" + str(user_id)))
             return {'message': 'Success', 'data': args}, 200
@@ -64,11 +67,25 @@ class UserNotesController(Resource):
 
 
 class UserNoteController(Resource):
+    def get(self, user_id, title):
+        if not self.id_valid(user_id):
+            return {'message': 'User not found', 'data': {}}, 404
+
+        note = PauliusNoteService().get_single_note(title + "*" + str(user_id))
+
+        if note is None:
+            return {'message': 'Note not found', 'data': {}}, 404
+
+        return {'message': 'Success', 'data': note.serialize()}, 200
+
     def delete(self, user_id, title):
         if not self.id_valid(user_id):
             return {'message': 'User not found', 'data': {}}, 404
 
         deleted = PauliusNoteService().delete_note(title + "*" + str(user_id))
+
+        if deleted is None:
+            return {'message': 'Unknown error occurred try again later', 'data': {}}, 500
 
         if deleted:
             delete_user_note((user_id, title))
@@ -98,6 +115,9 @@ class UserNoteController(Resource):
 
         updated = PauliusNoteService().update_note(title + "*" + str(user_id), note)
 
+        if updated is None:
+            return {'message': 'Unknown error occurred try again later', 'data': args}, 500
+
         if updated == 202:
             new_title = args['title'] + "*" + str(user_id)
             old_title = title + "*" + str(user_id)
@@ -107,7 +127,6 @@ class UserNoteController(Resource):
             return {'message': 'A note with this title already exists', 'data': args}, 404
         if updated == 404:
             return {'message': 'Note not found', 'data': {}}, 404
-
 
     def id_valid(self, id):
         user_results = get_users()
