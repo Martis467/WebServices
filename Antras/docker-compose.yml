@@ -16,7 +16,7 @@ services:
       - ws_bridge
 
   paulius_service:
-    build: .
+    build: PauliausService
     command: python ./PauliausService/app.py
     ports:
       - 5001:5001
