@@ -24,4 +24,4 @@ services:
       - ws_bridge
 
 networks:
-   name: ws_bridge
+   ws_bridge:
