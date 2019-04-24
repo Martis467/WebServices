@@ -7,7 +7,7 @@ services:
    - 80:5000
   volumes:
    - .:/code
-  container_name: base
+  container_name: original
   networks:
     - ws_bridge
  usr:
@@ -17,7 +17,7 @@ services:
     - "5009:5009"
   volumes:
     - .:/code
-  container_name: usr
+  container_name: external
   networks:
     - ws_bridge
 

@@ -5,7 +5,7 @@ from models.NoteModel import Note
 class PauliusNoteService:
 
     def __init__(self):
-        self.url = "http://usr:5009/"
+        self.url = "http://external:5009/"
 
     def get_all_notes(self):
         notes = []
