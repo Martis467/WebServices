@@ -1,27 +1,25 @@
-version: '3'
-
+version: '2'
 services:
-  web:
-    build: .
-    command: python app.py
-    ports:
-      - "80:5000"
-    links:
-      - "paulius_service"
-    depends_on:
-      - paulius_service
-    volumes:
-      - .:/code
-    networks:
-      - ws_bridge
-
-  paulius_service:
-    build: PauliausService
-    command: python ./PauliausService/app.py
-    ports:
-      - 5001:5001
-    networks:
-      - ws_bridge
+ base:
+  build: .
+  command: python app.py
+  ports:
+   - 80:5000
+  volumes:
+   - .:/code
+  container_name: base
+  networks:
+    - ws_bridge
+ usr:
+  build: .
+  command: python PauliausService/app.py
+  ports:
+    - "5009:5009"
+  volumes:
+    - .:/code
+  container_name: usr
+  networks:
+    - ws_bridge
 
 networks:
-   ws_bridge:
+  ws_bridge:
